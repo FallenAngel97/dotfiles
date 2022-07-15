@@ -6,4 +6,5 @@ local lsp = require('helpers_lsp')
 require'lspconfig'.tsserver.setup{
 	capabilities = lsp.capabilities,
 	on_attach = lsp.on_attach,
+	autostart = true,
 }

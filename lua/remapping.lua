@@ -8,6 +8,10 @@ set_keymap('n', '<Leader>t', '<cmd>Telescope find_files<CR>', { noremap = true }
 set_keymap('n', '<Leader>f', '<cmd>Telescope live_grep<CR>', { noremap = true });
 set_keymap('n', '<Leader>gb', '<cmd>Telescope git_branches<CR>', { noremap = true });
 set_keymap('n', '<Leader>w', ':bd<CR>', { noremap = true });
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 vim.api.nvim_buf_set_keymap(0, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap = true})
 

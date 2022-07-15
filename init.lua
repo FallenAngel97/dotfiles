@@ -1,6 +1,8 @@
 require 'options'
 require 'remapping'
 require 'android'
+local cmp = require'cmp'
+local lspkind = require('lspkind')
 
 require('packer').startup(function()
     use 'wbthomason/packer.nvim'
@@ -15,7 +17,14 @@ require('packer').startup(function()
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/plenary.nvim'
     use 'nvim-telescope/telescope.nvim'
-    use {'ms-jpq/coq_nvim', branch= 'coq'}
+		use 'onsails/lspkind.nvim'
+    use 'hrsh7th/cmp-nvim-lsp'
+		use 'hrsh7th/cmp-buffer'
+		use 'hrsh7th/cmp-path'
+		use 'hrsh7th/cmp-cmdline'
+		use 'hrsh7th/cmp-vsnip'
+		use 'hrsh7th/vim-vsnip'
+		use 'hrsh7th/nvim-cmp'
     use { 
 	    'akinsho/flutter-tools.nvim',
 	    branch = 'main',
@@ -100,7 +109,47 @@ vim.api.nvim_command("autocmd Filetype typescriptreact setlocal ts=2 sw=2 noexpa
 vim.api.nvim_command("syntax on")
 vim.api.nvim_command("filetype plugin indent on")
 vim.api.nvim_command("colorscheme sonokai")
-vim.g.coq_settings = { auto_start = true, clients = { lsp = { resolve_timeout = 400 } } }
+cmp.setup({
+	snippet = {
+		expand = function(args)
+			vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+		end,
+	},
+	window = {
+		completion = {
+			winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+      col_offset = -3,
+      side_padding = 0,
+		},
+	},
+	mapping = cmp.mapping.preset.insert({
+		['<C-b>'] = cmp.mapping.scroll_docs(-4),
+		['<C-f>'] = cmp.mapping.scroll_docs(4),
+		['<C-Space>'] = cmp.mapping.complete(),
+		['<C-e>'] = cmp.mapping.abort(),
+		['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+	}),
+	completion = {
+    completeopt = "menu,noselect"
+  },
+	formatting = {
+		fields = { "kind", "abbr", "menu" },
+    format = function(entry, vim_item)
+      local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+      local strings = vim.split(kind.kind, "%s", { trimempty = true })
+      kind.kind = " " .. strings[1] .. " "
+      kind.menu = "    (" .. strings[2] .. ")"
+
+      return kind
+    end,
+  },
+	sources = cmp.config.sources({
+		{ name = 'nvim_lsp' },
+		{ name = 'vsnip' }, -- For vsnip users.
+	}, {
+		{ name = 'buffer' },
+	})
+})
 
 require("trouble").setup {}
 require('telescope').setup{
