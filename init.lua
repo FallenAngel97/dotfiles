@@ -1,16 +1,31 @@
 require 'options'
 require 'remapping'
 require 'android'
-local cmp = require'cmp'
-local lspkind = require('lspkind')
 
 require('packer').startup(function()
     use 'wbthomason/packer.nvim'
     use 'kyazdani42/nvim-web-devicons';
     use 'tpope/vim-fugitive'
     use 'lewis6991/gitsigns.nvim'
-    use 'editorconfig/editorconfig-vim'
-    use { 'nvim-treesitter/nvim-treesitter', cmd = 'TSUpdate' }
+    use {
+			'editorconfig/editorconfig-vim',
+			opt = true,
+			event='BufEnter'
+		}
+    use { 
+			'nvim-treesitter/nvim-treesitter',
+			run = ':TSUpdate',
+			config = function ()
+				require'nvim-treesitter.configs'.setup {
+						highlight = {
+								enable = true,
+						},
+						indent = {
+							 enable = true
+						}
+				}
+			end
+		}
     use { 'prettier/vim-prettier', run = 'yarn install --frozen-lockfile --production' }
     use 'sainnhe/sonokai'
     use 'neovim/nvim-lspconfig'
@@ -25,6 +40,7 @@ require('packer').startup(function()
 		use 'hrsh7th/cmp-vsnip'
 		use 'hrsh7th/vim-vsnip'
 		use 'hrsh7th/nvim-cmp'
+		use 'mtdl9/vim-log-highlighting'
     use { 
 	    'akinsho/flutter-tools.nvim',
 	    branch = 'main',
@@ -61,6 +77,7 @@ require('packer').startup(function()
 						},
 					},
 				}
+				require("telescope").load_extension("flutter")
 	    end,
 	    ft = 'dart'
     }
@@ -94,7 +111,8 @@ require('packer').startup(function()
 							cwd = "${workspaceFolder}",
 					}
 				}
-			end
+			end,
+			ft={'dart'}
 		}
     use {
 	    'digitaltoad/vim-pug',
@@ -102,6 +120,8 @@ require('packer').startup(function()
 	    ft='pug'
     }
 end)
+local cmp = require'cmp'
+local lspkind = require('lspkind')
 
 vim.api.nvim_command("autocmd BufWritePre *.dart lua vim.lsp.buf.formatting_sync(nil, 1000)")
 vim.api.nvim_command("autocmd Filetype typescript setlocal ts=2 sw=2 noexpandtab")
@@ -192,15 +212,6 @@ require 'nvim-tree'.setup {
   },
 }
 
-require'nvim-treesitter.configs'.setup {
-    highlight = {
-        enable = true,
-    },
-    indent = {
-       enable = true
-    }
-}
-require("telescope").load_extension("flutter")
 require('gitsigns').setup {
 	current_line_blame = true,
 	numhl = true,
