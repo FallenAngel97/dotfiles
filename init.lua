@@ -20,6 +20,8 @@ require('packer').startup(function()
 						ensure_installed = {
 							"javascript",
 							"lua",
+							"bash",
+							"html",
 							"typescript",
 							"python",
 							"dart",
