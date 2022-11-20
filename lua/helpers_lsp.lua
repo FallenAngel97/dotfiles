@@ -22,7 +22,7 @@ M.on_attach = function (client, bufnr)
 	vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
 	vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
 	vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
-	if client.resolved_capabilities.document_highlight then
+	if client.server_capabilities.document_highlight then
 		local VariableHiglight = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
 		vim.api.nvim_create_autocmd("CursorHold", {
 			callback = vim.lsp.buf.document_highlight,
@@ -41,7 +41,7 @@ M.on_attach = function (client, bufnr)
 		})
 	end
 end
-M.capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+M.capabilities = require('cmp_nvim_lsp').default_capabilities()
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 return M;

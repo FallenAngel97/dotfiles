@@ -145,7 +145,6 @@ require('packer').startup(function()
 			requires = 'nvim-lua/plenary.nvim',
 	    config = function ()
 				local lsp = require('helpers_lsp')
-				print("LSP LOADED")
 				require("flutter-tools").setup{
 					flutter_path='/usr/bin/flutter',
 					widget_guides = {
