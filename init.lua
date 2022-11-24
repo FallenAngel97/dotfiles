@@ -5,13 +5,13 @@ require 'android'
 require('packer').startup(function()
     use 'wbthomason/packer.nvim'
     use 'kyazdani42/nvim-web-devicons';
-		use { 
-			"rcarriga/nvim-dap-ui",
-			requires = {"mfussenegger/nvim-dap"},
-			config = function()
-				require("dapui").setup()
-			end
-		}
+		--use { 
+		--	"rcarriga/nvim-dap-ui",
+		--	requires = {"mfussenegger/nvim-dap"},
+		--	config = function()
+		--		require("dapui").setup()
+		--	end
+		--}
     use 'tpope/vim-fugitive'
     use {
 			'lewis6991/gitsigns.nvim',
@@ -22,6 +22,7 @@ require('packer').startup(function()
 				}
 			end
 		}
+		use 'nvim-treesitter/playground'
     use {
 			'editorconfig/editorconfig-vim',
 			opt = true,
@@ -32,6 +33,10 @@ require('packer').startup(function()
 			run = ':TSUpdate',
 			config = function ()
 				require'nvim-treesitter.configs'.setup {
+						playground = {
+							enable = true,
+							disable = {},
+						},
 						ensure_installed = {
 							"javascript",
 							"lua",
@@ -234,6 +239,32 @@ require('packer').startup(function()
 					args = {"/home/angel/Documents/Dart-Code/out/dist/debug.js", "flutter"}
 				}
 
+			dap.adapters.node2 = {
+				type = 'executable',
+				command = 'node',
+				args = {os.getenv('HOME') .. '/dev/microsoft/vscode-node-debug2/out/src/nodeDebug.js'},
+			}
+			dap.configurations.javascript = {
+				{
+					name = 'Launch',
+					type = 'node2',
+					request = 'launch',
+					program = '${file}',
+					cwd = vim.fn.getcwd(),
+					sourceMaps = true,
+					protocol = 'inspector',
+					console = 'integratedTerminal',
+				},
+				{
+					-- For this to work you need to make sure the node process is started with the `--inspect` flag.
+					name = 'Attach to process',
+					type = 'node2',
+					request = 'attach',
+					processId = require'dap.utils'.pick_process,
+				},
+			}
+			dap.configurations.typescript = dap.configurations.javascript
+
 				dap.configurations.dart = {
 					{
 							type = "dart",
@@ -245,7 +276,8 @@ require('packer').startup(function()
 							cwd = "${workspaceFolder}",
 					}
 				}
-			end
+			end,
+			ft={'dart', 'javascript', 'typescript'}
 		}
     use {
 	    'digitaltoad/vim-pug',
