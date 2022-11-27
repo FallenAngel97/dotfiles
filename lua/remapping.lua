@@ -19,4 +19,6 @@ vim.api.nvim_buf_set_keymap(0, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', {no
 
 set_keymap('n', '<F5>', ":lua require'dap'.continue()<CR>", { noremap = true, silent = true });
 set_keymap('n', '<Leader>B', ":lua require 'dap'.toggle_breakpoint()<CR>", { noremap = true });
+set_keymap('n', '<Leader>gc', ":Git commit", { noremap = true });
+set_keymap('n', '<Leader>gp', ":Git push origin HEAD", { noremap = true });
 -- vim.keymap.set('n', '<Leader>d', require('dapui').toggle, { noremap = true });
