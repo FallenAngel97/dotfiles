@@ -12,6 +12,9 @@ require('packer').startup(function()
 		--		require("dapui").setup()
 		--	end
 		--}
+		use {'akinsho/git-conflict.nvim', tag = "*", config = function()
+			require('git-conflict').setup()
+		end}
     use 'tpope/vim-fugitive'
     use {
 			'lewis6991/gitsigns.nvim',
