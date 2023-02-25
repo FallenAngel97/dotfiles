@@ -4,7 +4,7 @@ set_keymap('n', '<C-b>', ':NvimTreeToggle<CR>', { noremap = true, silent = true 
 set_keymap('n', '<C-n>', ':set invnumber<CR>', { noremap = true });
 vim.keymap.set('n', '<Leader>c', vim.lsp.buf.code_action);
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
-set_keymap('n', '<Leader>t', '<cmd>Telescope find_files hidden=true<CR>', { noremap = true });
+set_keymap('n', '<Leader>t', '<cmd>Telescope find_files find_command=rg,--ignore,--hidden,--files,--glob,!**/.git/*,--glob,!**/node_modules/*,--glob,!**/.next/*<CR>', { noremap = true });
 set_keymap('n', '<Leader>f', '<cmd>Telescope live_grep<CR>', { noremap = true });
 set_keymap('n', '<Leader>gb', '<cmd>Telescope git_branches<CR>', { noremap = true });
 set_keymap('n', '<Leader>w', ':bd<CR>', { noremap = true });

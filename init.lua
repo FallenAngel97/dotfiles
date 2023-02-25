@@ -80,15 +80,14 @@ require('packer').startup(function()
 					pickers = {
 						find_files = {
 							previewer = false,
-							find_command = { "rg", "--files", "--hidden", "-g", "'!.git'" },
 						}
 					},
-					 defaults = {
-							 layout_config = {
-								 prompt_position = 'top',
-							 },
-							 sorting_strategy = 'ascending',
-					 },
+					defaults = {
+					 	 layout_config = {
+					 		 prompt_position = 'top',
+					 	 },
+					 	 sorting_strategy = 'ascending',
+					},
 				}
 			end
 		}
