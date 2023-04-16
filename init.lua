@@ -35,6 +35,7 @@ require('packer').startup(function()
 			'nvim-treesitter/nvim-treesitter',
 			run = ':TSUpdate',
 			config = function ()
+				require("nvim-treesitter.install").prefer_git = true
 				require'nvim-treesitter.configs'.setup {
 						playground = {
 							enable = true,
@@ -289,7 +290,7 @@ require('packer').startup(function()
     }
 end)
 
-vim.api.nvim_command("autocmd BufWritePre *.dart lua vim.lsp.buf.formatting_sync(nil, 1000)")
+vim.api.nvim_command("autocmd BufWritePre *.dart lua vim.lsp.buf.format()")
 vim.api.nvim_command("autocmd Filetype typescript setlocal ts=2 sw=2 noexpandtab")
 vim.api.nvim_command("autocmd Filetype typescriptreact setlocal ts=2 sw=2 noexpandtab")
 vim.api.nvim_command("syntax on")
