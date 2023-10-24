@@ -8,7 +8,6 @@ vim.opt.exrc = true
 vim.opt.list = true
 vim.opt.cursorline = true
 vim.opt.listchars="eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:·"
-vim.opt.modeline = false
 vim.opt.foldmethod = 'syntax'
 vim.opt.incsearch = true
 vim.opt.scrolloff = 8

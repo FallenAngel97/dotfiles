@@ -84,10 +84,13 @@ require('packer').startup(function()
 						}
 					},
 					defaults = {
-					 	 layout_config = {
-					 		 prompt_position = 'top',
-					 	 },
-					 	 sorting_strategy = 'ascending',
+						preview = {
+							treesitter = false,
+						},
+					 	layout_config = {
+					 		prompt_position = 'top',
+					 	},
+					 	sorting_strategy = 'ascending',
 					},
 				}
 			end
