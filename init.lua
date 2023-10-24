@@ -25,12 +25,16 @@ require('packer').startup(function()
 				}
 			end
 		}
-		use 'nvim-treesitter/playground'
-    use {
-			'editorconfig/editorconfig-vim',
-			opt = true,
-			event='BufEnter'
+		use 'google/vim-maktaba'
+		use {
+			'google/vim-glaive',
+			requires = 'google/vim-maktaba',
 		}
+		use {
+			'google/vim-codefmt',
+			requires = 'google/vim-maktaba',
+		}
+		use 'nvim-treesitter/playground'
     use { 
 			'nvim-treesitter/nvim-treesitter',
 			run = ':TSUpdate',
@@ -72,6 +76,7 @@ require('packer').startup(function()
 			end
 		}
     use 'neovim/nvim-lspconfig'
+		use 'mfussenegger/nvim-jdtls'
     use 'nvim-lua/popup.nvim'
     use 'nvim-lua/plenary.nvim'
     use {
